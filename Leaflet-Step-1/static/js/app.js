@@ -93,10 +93,10 @@ function createMap(earthquakes) {
   // Create our map, giving it the darkmap and earthquakes layers to display on load
   let myMap = L.map("map", {
     center: [
-      37.09, -95.71
+      0, 0
     ],
-    zoom: 5,
-    layers: [darkmap, earthquakes],
+    zoom: 3,
+    layers: [lightmap, earthquakes],
     // Stops markers from being left behind with infinite world scroll
     worldCopyJump: true
   });
@@ -109,26 +109,24 @@ function createMap(earthquakes) {
     // Set up the legend
     var legend = L.control({ position: "bottomright" });
     legend.onAdd = function() {
-      var div = L.DomUtil.create("div", "info legend");
-      var bins = [0, 5, 10, 30, 50, 60];
-      var colors = ['#FF0000', '#FF9700', '#FFF700', '#6CFF00', '#00FFAE', 'blue'].reverse();
-      var labels = [];
+      let div = L.DomUtil.create("div", "info legend");
+      let grades = [0, 5, 10, 30, 50, 60];
+      let colors = ['#FF0000', '#FF9700', '#FFF700', '#6CFF00', '#00FFAE', 'blue'].reverse();
   
       // Add min & max
-      var legendInfo = `<h1>Earthquake Depth</h1>
-        <div class="labels">
-          <div class="min"> ${bins[0]}km </div>
-          <div class="max"> '60+km' </div>
-        </div>`;
+      var legendInfo = '<h2>Earthquake Depth</h2>'
   
       div.innerHTML = legendInfo;
   
-      bins.forEach(function(bin, index) {
-        labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
-      });
-  
-      div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+      for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + colors[i] + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + (grades[i + 1]-1) + 'km<br>' : '+km');
+    }
+
       return div;
+
+      // Legend code adapted from Leaflet Choropleth example (https://leafletjs.com/examples/choropleth/)
     };
   
     // Adding legend to the map
