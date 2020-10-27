@@ -106,5 +106,31 @@ function createMap(earthquakes) {
     collapsed: false
   }).addTo(myMap);
 
-
+    // Set up the legend
+    var legend = L.control({ position: "bottomright" });
+    legend.onAdd = function() {
+      var div = L.DomUtil.create("div", "info legend");
+      var bins = [0, 5, 10, 30, 50, 60];
+      var colors = ['#FF0000', '#FF9700', '#FFF700', '#6CFF00', '#00FFAE', 'blue'].reverse();
+      var labels = [];
+  
+      // Add min & max
+      var legendInfo = `<h1>Earthquake Depth</h1>
+        <div class="labels">
+          <div class="min"> ${bins[0]}km </div>
+          <div class="max"> '60+km' </div>
+        </div>`;
+  
+      div.innerHTML = legendInfo;
+  
+      bins.forEach(function(bin, index) {
+        labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+      });
+  
+      div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+      return div;
+    };
+  
+    // Adding legend to the map
+    legend.addTo(myMap);
 }
