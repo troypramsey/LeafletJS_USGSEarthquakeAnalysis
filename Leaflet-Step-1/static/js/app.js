@@ -46,7 +46,7 @@ function createFeatures(earthquakeData) {
     onEachFeature: onEachFeature,
     pointToLayer: (feature, latlng) => {
       return new L.Circle(latlng, {
-        radius: (feature.properties.mag**2)*10000,
+        radius: (feature.properties.mag**2)**4,
         // Calling color grabbing function on each data point
         fillColor: getColor(feature.geometry.coordinates[2]),
         fillOpacity: .7,
