@@ -103,7 +103,7 @@ function createMap(earthquakes) {
 
   // Create a layer control
   L.control.layers(baseMaps, overlayMaps, {
-    collapsed: false
+    collapsed: true
   }).addTo(myMap);
 
     // Set up the legend
